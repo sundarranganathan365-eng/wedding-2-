@@ -46,15 +46,13 @@ const HeroSection = () => {
     offset: ["start start", "end end"],
   });
 
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 40,
-    damping: 25,
+  // NATIVE SCROLL FIX: To avoid Framer Motion useTransform hook crashes from ternary motion-value swaps,
+  // we use a unified spring but make it virtually instant (1:1 tracking) on mobile, and smooth/cinematic on desktop.
+  const activeProgress = useSpring(scrollYProgress, {
+    stiffness: isMobile ? 400 : 40,
+    damping: isMobile ? 40 : 25,
     restDelta: 0.001,
   });
-
-  // RAW NATIVE SCROLL: Mobile gets 1:1 thumb pixel binding. 
-  // Eliminating 'useSpring' physics completely cures the "lag/delay" feeling on touch screens.
-  const activeProgress = isMobile ? scrollYProgress : smoothProgress;
 
   // Story Mapping interpolation: Mapping scroll uniformly for smooth sequence playback
   const currentFrameIndex = useTransform(
@@ -193,11 +191,10 @@ const HeroSection = () => {
           </div>
         )}
 
-        {/* Native Image Scrollytelling Pipeline */}
         <div className="absolute inset-0 z-[2] w-full h-full overflow-hidden bg-[#0a0a0a]">
           <img
             ref={imgRef}
-            className={`w-full h-full object-cover object-[52%_center] transition-opacity duration-1000 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+            className={`w-full h-full object-cover object-center transition-opacity duration-1000 ${loaded ? 'opacity-100' : 'opacity-0'}`}
             alt="Cinematic Scroll Reveal"
             draggable={false}
           />
