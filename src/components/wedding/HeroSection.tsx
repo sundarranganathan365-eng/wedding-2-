@@ -62,9 +62,9 @@ const HeroSection = () => {
   );
 
   // Typographic Opacity maps for the cinematic title (fades out as you scroll)
-  const titleOpacity = useTransform(activeProgress, [0, 0.1, 0.15], [1, 0.5, 0]);
-  const titleScale = useTransform(activeProgress, [0, 0.15], [1, 0.95]);
-  const titleY = useTransform(activeProgress, [0, 0.15], ["0%", "-30%"]);
+  const titleOpacity = useTransform(activeProgress, [0, 0.15, 0.25], [1, 0.5, 0]);
+  const titleScale = useTransform(activeProgress, [0, 0.25], [1, 0.95]);
+  const titleY = useTransform(activeProgress, [0, 0.25], ["0%", "-30%"]);
 
   // Opacity maps for cinematic story layers later in the scroll
   const text1Opacity = useTransform(activeProgress, [0.18, 0.22, 0.4, 0.45], [0, 1, 1, 0]);
@@ -194,7 +194,7 @@ const HeroSection = () => {
         <div className="absolute inset-0 z-[2] w-full h-full overflow-hidden bg-[#0a0a0a]">
           <img
             ref={imgRef}
-            className={`w-full h-full object-cover object-[44%_center] transition-opacity duration-1000 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+            className={`w-full h-full object-cover object-[47%_center] transition-opacity duration-1000 ${loaded ? 'opacity-100' : 'opacity-0'}`}
             alt="Cinematic Scroll Reveal"
             draggable={false}
           />
